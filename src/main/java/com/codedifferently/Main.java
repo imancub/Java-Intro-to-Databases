@@ -2,20 +2,23 @@ package com.codedifferently;
 
 import com.codedifferently.database.DataBase;
 import com.codedifferently.database.DataBaseConnectionException;
+//import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
+    private AddressBook addressBook;
     private DataBase dataBase;
     private static Scanner scanner;
-
     private ArrayList<String> menu;
+
     public Main() throws DataBaseConnectionException {
         dataBase = new DataBase();
         scanner = new Scanner(System.in);
         initMenuOption();
+        addressBook = new AddressBook();
+
     }
 
     private void initMenuOption(){
@@ -36,6 +39,19 @@ public class Main {
         return option;
     }
 
+    public void addPerson(){
+        System.out.println("Enter first name ");
+        String firstName = scanner.next();
+        System.out.println("Enter last name ");
+        String lastName = scanner.next();
+        System.out.println("Enter Email: ");
+        String email = scanner.next();
+        System.out.println("Enter age ");
+        Integer age = scanner.nextInt();
+        Person person = new Person(firstName, lastName, email, age);
+        addressBook.addPerson(person);
+    }
+
     public static void main(String[] args) {
         try {
             Main main = new Main();
@@ -49,6 +65,9 @@ public class Main {
                     case 0:
                         System.out.println("Goodbye!!");
                         endProgram = true;
+                        break;
+                    case 1:
+                        main.addPerson();
                         break;
                     default:
                         break;
